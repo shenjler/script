@@ -1,0 +1,22 @@
+#!/bin/sh
+
+
+list=("dhq_nacos_config" "dhq_report" "dhq_workflow" "dhq_common" "dhq_stock" "dhq_big_customer" "dhq_cmdb" "dhq_knowledge_base")
+
+now=`date +%Y%m%d-%H%M`
+for it in ${list[@]}; do
+    #now=`date +%Y%m%d-%H%M`
+    if [ -f ./sql-backup169/${it}.sql ]; then
+	mv ./sql-backup169/${it}.sql ./sql-backup169/${it}-${now}.sql
+    fi
+    ./mysqldump -h 19.52.68.169 -ucmdb -pE_u5Ve-s2_k_a78343 ${it} > ./sql-backup169/${it}.sql
+    cp -R ./sql-backup169/${it}.sql /data/backup/${it}169.sql
+done
+
+./mysqldump -h 19.52.68.169 -ucmdb -pE_u5Ve-s2_k_a78343  dhq_devops --ignore-table=dhq_devops.alarm_ali_rds --ignore-table=dhq_devops.alarm_notify_relationship  --ignore-table=dhq_devops.alarm_notify --ignore-table=dhq_devops.alarm_additional_content --ignore-table=dhq_devops.alarm --ignore-table=dhq_devops.alarm_derive_relation --ignore-table=dhq_devops.alarm_ali_alert_event --ignore-table=dhq_devops.alarm_ali_alert_history --ignore-table=dhq_devops.alarm_syslog --ignore-table=dhq_devops.rule_statistics --ignore-table=dhq_devops.statistics_value --ignore-table=dhq_devops.module_version --ignore-table=dhq_devops.alarm_esight_ap_list_history --ignore-table=dhq_devops.web_service_manage_object_devvou_history > /data/backup/dhq_devops169.sql
+
+
+zip -i "*169.sql"  -r /data/backup/sql-169.zip /data/backup/*
+
+rm -rf /data/backup/dhq_*169.sql
+
