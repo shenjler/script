@@ -24,10 +24,10 @@ systemctl start mariadb
 #连接数据库
 echo " mysql -u root -p"
 #设置密码
-echo " set password for 'root'@'localhost' =password('root');"
+#echo " set password for 'root'@'localhost'=password('root'); grant all privileges on *.* to root@'%'identified by 'root'; flush privileges;"
 
 #远程连接设置
 #把在所有数据库的所有表的所有权限赋值给位于所有IP地址的root用户。
 #如果是新用户而不是root，则要先新建用户
-#mysql>create user 'username'@'%' identified by 'password';
-echo " grant all privileges on *.* to root@'%'identified by 'root';"
+# create user 'username'@'%' identified by 'password';
+#res=(`mysql -uroot -proot -e "set password for 'root'@'localhost'=password('root'); grant all privileges on *.* to root@'%'identified by 'root'; flush privileges;"`)
