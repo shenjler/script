@@ -22,9 +22,9 @@ systemctl start mariadb
 
 
 #连接数据库
-echo " mysql -u root -p"
+echo " exec command: mysql -u root --password=  -e \"set password for 'root'@'localhost'=password('root'); grant all privileges on *.* to root@'%'identified by 'root'; flush privileges;\""
 #设置密码
-#echo " set password for 'root'@'localhost'=password('root'); grant all privileges on *.* to root@'%'identified by 'root'; flush privileges;"
+mysql -u root --password= -e "set password for 'root'@'localhost'=password('root'); grant all privileges on *.* to root@'%'identified by 'root'; flush privileges;"
 
 #远程连接设置
 #把在所有数据库的所有表的所有权限赋值给位于所有IP地址的root用户。
