@@ -1,0 +1,33 @@
+
+# 方法一
+yum install -y mariadb-server mariadb 
+
+#mariadb数据库的相关命令是：
+#systemctl start mariadb  #启动MariaDB
+#systemctl stop mariadb  #停止MariaDB
+#systemctl restart mariadb  #重启MariaDB
+#systemctl enable mariadb  #设置开机启动
+
+#所以先启动数据库
+systemctl start mariadb
+
+# 方法二
+# wget http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
+# rpm -ivh mysql-community-release-el7-5.noarch.rpm
+# yum install -y mysql-community-server
+
+# 安装成功后重启mysql服务。
+# service mysqld restart
+
+
+
+#连接数据库
+echo " mysql -u root -p"
+#设置密码
+echo " set password for 'root'@'localhost' =password('root');"
+
+#远程连接设置
+#把在所有数据库的所有表的所有权限赋值给位于所有IP地址的root用户。
+#如果是新用户而不是root，则要先新建用户
+#mysql>create user 'username'@'%' identified by 'password';
+echo " grant all privileges on *.* to root@'%'identified by 'root';"
