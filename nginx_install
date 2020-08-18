@@ -32,3 +32,6 @@ make install
 
 #查找安装路径：
 whereis nginx
+
+
+echo "finish"
