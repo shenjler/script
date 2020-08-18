@@ -15,7 +15,9 @@ yum install -y openssl openssl-devel
 
 #直接下载.tar
 version=1.18.0
-wget -c https://nginx.org/download/nginx-${version}.tar.gz
+#wget -c https://nginx.org/download/nginx-${version}.tar.gz
+curl -o nginx-${version}.tar.gz https://nginx.org/download/nginx-${version}.tar.gz
+
 
 #解压
 tar -zxvf nginx-${version}.tar.gz
