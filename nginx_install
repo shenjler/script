@@ -33,5 +33,9 @@ make install
 #查找安装路径：
 whereis nginx
 
+#添加环境变量
+echo "add env to path"
+echo 'export PATH="$PATH:/usr/local/nginx/sbin"' >> /etc/profile
+source /etc/profile
 
-echo "finish"
+echo "finish install. exec 'nginx' to start "
