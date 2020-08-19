@@ -1,6 +1,6 @@
 #Add the EPEL repository, and update YUM to confirm your change:
 yum install -y epel-release
-yum update -y
+#yum update -y
 
 yum install -y redis
 
