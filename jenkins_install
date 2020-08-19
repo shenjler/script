@@ -2,7 +2,7 @@ sudo curl -o /etc/yum.repos.d/jenkins.repo \
     https://pkg.jenkins.io/redhat/jenkins.repo
 sudo rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key
 
-sed -i 's/^baseurl=.*/baseurl=https:\/\/mirrors.aliyun.com\/jenkins/g' /etc/yum.repos.d/jenkins.repo
+sed -i 's/^baseurl=.*/baseurl=https:\/\/mirrors.aliyun.com\/jenkins\/redhat/g' /etc/yum.repos.d/jenkins.repo
 
 sudo yum upgrade -y
 sudo yum install -y jenkins java-1.8.0-openjdk-devel
