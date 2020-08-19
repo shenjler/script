@@ -1,3 +1,6 @@
+yum install epel-release
+yum update
+
 yum install -y redis
 
 #设置redis密码
