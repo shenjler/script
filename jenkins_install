@@ -1,0 +1,13 @@
+sudo curl -o /etc/yum.repos.d/jenkins.repo \
+    https://pkg.jenkins.io/redhat/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key
+sudo yum upgrade -y
+sudo yum install -y jenkins java-1.8.0-openjdk-devel
+
+
+#Start Jenkins
+#You can start the Jenkins service with the command:
+sudo systemctl start jenkins
+
+#You can check the status of the Jenkins service using the command:
+sudo systemctl status jenkins
