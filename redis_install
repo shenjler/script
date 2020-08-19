@@ -14,4 +14,4 @@ systemctl enable redis.service
 
 # -a redis密码登录
 redis-cli -a redis ping
-ps -ef | grep 
+ps -ef | grep redis
