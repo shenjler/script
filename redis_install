@@ -5,9 +5,13 @@ yum install -y epel-release
 yum install -y redis
 
 #设置redis密码
-#打开文件/etc/redis.conf，找到其中的# requirepass foobared，去掉前面的#，并把foobared改成你的密码。
+#打开文件/etc/redis.conf，找到其中的# requirepass foobared，去掉前面的#，并把foobared改成你的密码redis。
 sed -i 's/# requirepass foobared/requirepass redis/g' /etc/redis.conf
 
 systemctl start redis.service
 
 systemctl enable redis.service
+
+# -a redis密码登录
+redis-cli -a redis ping
+ps -ef | grep 
