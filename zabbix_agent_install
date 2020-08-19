@@ -12,8 +12,8 @@ yum makecache
 yum install -y zabbix-agent
 
 zabbixServer=192.168.0.114
-sed -i 's/^Server=.*$/Server=${zabbixServer}/g' /etc/zabbix/zabbix_agentd.conf
-sed -i 's/^ServerActive=.*$/ServerActive=${zabbixServer}/g' /etc/zabbix/zabbix_agentd.conf
+sed -i "s/^Server=.*$/Server=${zabbixServer}/g" /etc/zabbix/zabbix_agentd.conf
+sed -i "s/^ServerActive=.*$/ServerActive=${zabbixServer}/g" /etc/zabbix/zabbix_agentd.conf
 
 grep "Server" /etc/zabbix/zabbix_agentd.conf | grep -v '^#'
 service zabbix-agent restart
