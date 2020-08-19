@@ -22,3 +22,6 @@ sudo firewall-cmd --reload
 
 # 初始密码
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+
+# @See https://linuxize.com/post/how-to-install-jenkins-on-centos-7/
