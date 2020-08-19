@@ -17,5 +17,8 @@ sudo systemctl status jenkins
 
 sudo systemctl enable jenkins
 
+sudo firewall-cmd --permanent --zone=public --add-port=8080/tcp
+sudo firewall-cmd --reload
+
 # 初始密码
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
