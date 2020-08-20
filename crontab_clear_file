@@ -1,4 +1,4 @@
-# 异常最近五天的日志
+# 移除五天前的日志
 crontab -l > rmlog.txt
 echo "0 12 * * *  find /opt/dhqOneOssWorkflow -mtime +5 -name \"*.log.*\" -exec rm -rf {} \;" >> rmlog.txt
 crontab rmlog.txt
