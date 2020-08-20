@@ -1,0 +1,14 @@
+# 异常最近五天的日志
+crontab -l > rmlog.txt
+echo "0 12 * * *  find /opt/dhqOneOssWorkflow -mtime +5 -name \"*.log.*\" -exec rm -rf {} \;" >> rmlog.txt
+crontab rmlog.txt
+crontab -l
+
+
+
+#*/20 * * * * /sbin/ntpdate -u pool.ntp.org > /dev/null 2>&1
+# For TRAP
+#00                0 * * * /home/fes/snmpadm/pro/house_keep 2> /home/fes/snmpadm/tmp/house_keep.log
+#01,11,21,31,41,52 * * * * /home/fes/snmpadm/pro/chk_sta Slient
+#06,16,26,26,46,56 * * * * /home/fes/snmpadm/pro/chk_sta Slient
+#0 12 * * *  find /opt/dhqOneOssWorkflow -mtime +5 -name "*.log.*" -exec rm -rf {} \;
