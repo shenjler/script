@@ -23,3 +23,24 @@ curl -X GET "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&g
 
 
 # @See https://nacos.io/zh-cn/docs/quick-start.html
+
+
+
+cat ../nacos/conf/cluster.conf
+
+cat <<EOF
+# ip:port
+200.8.9.16:8848
+200.8.9.17:8848
+200.8.9.18:8848
+EOF > ../nacos/conf/cluster.conf
+
+echo " ----- after -----"
+cat ../nacos/conf/cluster.conf
+
+# db & properties
+# mysql https://raw.githubusercontent.com/alibaba/nacos/master/distribution/conf/nacos-mysql.sql
+# https://raw.githubusercontent.com/alibaba/nacos/master/distribution/conf/application.properties
+
+
+
