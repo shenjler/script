@@ -12,3 +12,6 @@ crontab -l
 #01,11,21,31,41,52 * * * * /home/fes/snmpadm/pro/chk_sta Slient
 #06,16,26,26,46,56 * * * * /home/fes/snmpadm/pro/chk_sta Slient
 #0 12 * * *  find /opt/dhqOneOssWorkflow -mtime +5 -name "*.log.*" -exec rm -rf {} \;
+
+
+# @See https://www.cnblogs.com/joingyb/p/11461522.html
