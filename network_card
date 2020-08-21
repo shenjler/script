@@ -1,0 +1,8 @@
+
+card=`ifconfig | head -1 | awk -F: '{print $1}'`
+echo $card
+
+cat /etc/sysconfig/network-scripts/ifcfg-${card}
+
+
+
