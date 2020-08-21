@@ -1,8 +1,8 @@
 
 version=1.3.0
 # https://github.com/alibaba/nacos/releases/download/1.3.2/nacos-server-1.3.2.zip
-#curl -fsSL -o nacos-server-${version}.tar.gz https://github.com/alibaba/nacos/releases/download/${version}/nacos-server-${version}.tar.gz
-wget https://github.com/alibaba/nacos/releases/download/${version}/nacos-server-${version}.tar.gz
+curl -fsSL -o nacos-server-${version}.tar.gz https://github.com/alibaba/nacos/releases/download/${version}/nacos-server-${version}.tar.gz
+#wget https://github.com/alibaba/nacos/releases/download/${version}/nacos-server-${version}.tar.gz
 # unzip nacos-server-${version}.zip 或者
 tar -xvf nacos-server-${version}.tar.gz
 
