@@ -1,5 +1,7 @@
 
-card=`ifconfig | head -1 | awk -F: '{print $1}'`
+#card=`ifconfig | head -1 | awk -F: '{print $1}'`
+
+card=`ip address | grep "state UP" | awk -F ": " '{print $2}'`
 echo $card
 
 cat /etc/sysconfig/network-scripts/ifcfg-${card}
