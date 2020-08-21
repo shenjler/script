@@ -6,9 +6,9 @@ curl -fsSL -o nacos-server-${version}.tar.gz https://github.com/alibaba/nacos/re
 # unzip nacos-server-${version}.zip 或者
 tar -xvf nacos-server-${version}.tar.gz
 
-cd nacos/bin
+#cd nacos/bin/
 
-sh startup.sh -m standalone
+sh ./nacos/bin/startup.sh -m standalone
 
 #4.服务注册&发现和配置管理
 #服务注册
@@ -28,9 +28,9 @@ curl -X GET "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&g
 
 
 
-cat ../nacos/conf/cluster.conf
+echo "" > ./nacos/conf/cluster.conf
 
-cat >> ../nacos/conf/cluster.conf << AAA
+cat >> ./nacos/conf/cluster.conf << AAA
 # ip:port
 200.8.9.16:8848
 200.8.9.17:8848
@@ -38,7 +38,7 @@ cat >> ../nacos/conf/cluster.conf << AAA
 AAA
 
 echo " ----- after -----"
-cat ../nacos/conf/cluster.conf
+cat ./nacos/conf/cluster.conf
 
 # db & properties
 # mysql https://raw.githubusercontent.com/alibaba/nacos/master/distribution/conf/nacos-mysql.sql
