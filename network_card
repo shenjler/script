@@ -6,5 +6,14 @@ echo $card
 
 cat /etc/sysconfig/network-scripts/ifcfg-${card}
 
+# BOOTPROTO=dhcp
+sed -i "s/^BOOTPROTO=.*/BOOTPROTO=static/g' /etc/sysconfig/network-scripts/ifcfg-${card}
+# IPADDR=192.168.0.114
+sed -i "s/^IPADDR=.*//g' /etc/sysconfig/network-scripts/ifcfg-${card}
+echo "IPADDR=192.168.0.114" >> /etc/sysconfig/network-scripts/ifcfg-${card}
+
+# 域名解析DNS
+sed -i "s/^nameserver.*/nameserver 192.168.0.1/g' /etc/resolve.conf
 
 
+service network restart
