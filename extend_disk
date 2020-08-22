@@ -59,7 +59,7 @@ fdisk -l
 #	扇区大小(逻辑/物理)：512 字节 / 512 字节
 #	I/O 大小(最小/最佳)：512 字节 / 512 字节#	
 
-# 显示物理卷
+# 5、显示物理卷
 #   pvdisplay - Display various attributes of physical volume(s)    
 pvdisplay
 #  --- Physical volume ---
@@ -90,14 +90,18 @@ pvcreate  /dev/sdb
 
 
 
-# 显示磁盘卷组
+# 6、显示磁盘卷组
 # vgs - Display information about volume groups 
 vgs
-  
 #   VG     #PV #LV #SN Attr   VSize  VFree 
 #   centos   2   2   0 wz--n- 14.99g 96.00m
 
-# 显示逻辑卷
+# 7、扩展卷组大小  vgextend、 vgreduce 缩小卷组大小
+# vgextend - Add physical volumes to a volume group
+vgextend centos /dev/sdb
+
+
+# 8、显示逻辑卷
 # lvs - Display information about logical volumes 
 lvs
 
@@ -106,17 +110,34 @@ lvs
 #  swap centos -wi-ao---- 820.00m 
 
 
-# 扩展卷组大小 vgextend -L +10G centos （卷组名）、 vgreduce 缩小卷组大小
-vgextend -L +10G centos
-
-# 扩展逻辑卷大小 lvextend -L +10G /dev/mapper/centos-root （卷组名）
+# 9、扩展逻辑卷大小 lvextend -L +10G /dev/mapper/centos-root （卷组名）
+# lvextend - Add space to a logical volume
 lvextend -L +10G /dev/mapper/centos-root  （逻辑卷名）
 
-# 重新读取磁盘
-xfs_growxfs  /dev/mapper/centos-root      # xfs类型磁盘
+# 10、重新读取磁盘
+xfs_growfs  /dev/mapper/centos-root      # xfs类型磁盘
 
 resize2fs  /dev/mapper/centos-root        # nfs类型磁盘
 
 
+# 11、查看扩展情况df
+df -h
 
+# 12、mount 挂载
+#将 /dev/hda1 挂在 /mnt 之下。
+#  mount /dev/sda2 /root/share
 
+#	mount 命令用来挂载文件系统。其基本命令格式为：
+#	mount -t type [-o options] device dir
+#	device：指定要挂载的设备，比如磁盘、光驱等。
+#	dir：指定把文件系统挂载到哪个目录。
+#	type：指定挂载的文件系统类型，一般不用指定，mount 命令能够自行判断。
+#	options：指定挂载参数，比如 ro 表示以只读方式挂载文件系统。
+
+# 13、输出指定类型的文件系统
+#通过 -t 参数可以只输出指定类型的文件系统，比如下面的命令只会输出 xfs 类型的文件系统：
+mount -t xfs
+
+# 14、挂载 windows 共享文件
+sudo mount -o username=shenjl,password=shenjl //192.168.0.101/share /root/share
+# @See https://www.cnblogs.com/sparkdev/p/9015312.html
