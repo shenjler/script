@@ -151,3 +151,16 @@ echo "share /root/share vboxsf defaults 0 0" >> /etc/fstab
 
 #或者echo "mount -t vboxsf share /root/share" /etc/rc.local
 #chmod +x /etc/rc.d/rc.local
+
+# 创建交换分区swapfile
+dd if=/dev/zero of=swapfile bs=1024K count=8192
+du -sh swapfile
+#命令会在当前目录下创建一个文件swapfile
+#if表示指定读取的文件或设备
+#of表示指定写入的文件或设备
+#bs表示一次读出或写入的大小
+#count表示读出或写入次数
+swapon swapfile
+free -m
+#swapoff swapfile
+
