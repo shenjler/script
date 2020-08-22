@@ -1,10 +1,141 @@
 
-cat log.txt << AAA
+cat > log.txt << AAA
 2 this is a test
 3 Are you like awk
 This's a test
 10 There are orange,apple,mongo
 AAA
 
-
 cat log.txt
+
+# 用法一：
+# awk '{[pattern] action}' {filenames}   # 行匹配语句 awk '' 只能用单引号  , 默认分隔符为空格 -F
+awk '{print $1}'  log.txt
+
+# 每行按空格或TAB分割，输出文本中的1、4项
+awk '{print $1,$4}' log.txt
+
+# 用法二：
+# awk -F  #-F相当于内置变量FS, 指定分割字符
+
+# 使用","分割
+awk -F, '{print $1,$2}'   log.txt
+
+# 或者使用内建变量
+awk 'BEGIN{FS=","} {print $1,$2}'     log.txt
+
+# 使用多个分隔符.先使用空格分割，然后对分割结果再使用","分割
+awk -F '[ ,]'  '{print $1,$2,$5}'   log.txt
+
+
+# 用法三：
+# awk -v  # 设置变量
+awk -v a=3 '{print $1,$1+a}' log.txt
+awk -va=3 -vb=tt '{print $1,$1+a,$2b}' log.txt
+awk -va=3 -vb=tt '{print $1,$1+a,"$2 b"}' log.txt
+
+# 用法四：
+# awk -f {awk脚本} {文件名}
+# 过滤第一列大于2的行
+awk '$1>2' log.txt    #命令
+
+#过滤第一列等于2的行
+awk '$1==2 {print $1,$3}' log.txt    #命令
+
+#过滤第一列大于2并且第二列等于'Are'的行
+awk '$1>2 && $2=="Are" {print $1,$2,$3}' log.txt    #命令
+
+
+#内建变量
+awk 'BEGIN{printf "%4s %4s %4s %4s %4s %4s %4s %4s %4s\n","FILENAME","ARGC","FNR","FS","NF","NR","OFS","ORS","RS";printf "---------------------------------------------\n"} {printf "%4s %4s %4s %4s %4s %4s %4s %4s %4s\n",FILENAME,ARGC,FNR,FS,NF,NR,OFS,ORS,RS}'  log.txt
+
+awk -F\' 'BEGIN{printf "%4s %4s %4s %4s %4s %4s %4s %4s %4s\n","FILENAME","ARGC","FNR","FS","NF","NR","OFS","ORS","RS";printf "---------------------------------------------\n"} {printf "%4s %4s %4s %4s %4s %4s %4s %4s %4s\n",FILENAME,ARGC,FNR,FS,NF,NR,OFS,ORS,RS}'  log.txt
+
+# 输出顺序号 NR, 匹配文本行号
+awk '{print NR,FNR,$1,$2,$3}' log.txt
+
+# 指定输出分割符
+awk '{print $1,$2,$5}' OFS=" $ "  log.txt
+
+# 使用正则，字符串匹配 
+# 输出第二列包含 "th"，并打印第二列与第四列  ~ 表示模式开始。// 中是模式。
+awk '$2 ~ /th/ {print $2,$4}' log.txt
+
+# 输出包含 "re" 的行   如果没有{print $1}则全行输出
+awk '/re/' log.txt
+awk '!/re/' log.txt
+
+# 忽略大小写
+awk 'BEGIN{IGNORECASE=1} /this/' log.txt
+
+# 模式取反
+awk '$2 !~ /th/ {print $2,$4}' log.txt
+awk '!/th/ {print $2,$4}' log.txt
+
+# 计算文件大小
+ls -l *.txt | awk '{sum+=$5} END {print sum}'
+
+# 从文件中找出长度大于 80 的行：
+awk 'length>80' log.txt
+
+# 打印九九乘法表
+seq 9 | sed 'H;g' | awk -v RS='' '{for(i=1;i<=NF;i++)printf("%dx%d=%d%s", i, NR, i*NR, i==NR?"\n":"\t")}'
+
+
+
+#	awk脚本
+#	关于 awk 脚本，我们需要注意两个关键词 BEGIN 和 END。
+#	
+#	BEGIN{ 这里面放的是执行前的语句 }
+#	END {这里面放的是处理完所有的行后要执行的语句 }
+#	{这里面放的是处理每一行时要执行的语句}
+#	假设有这么一个文件（学生成绩表）：
+
+cat > score.txt << BBB
+Marry   2143 78 84 77
+Jack    2321 66 78 45
+Tom     2122 48 77 71
+Mike    2537 87 97 95
+Bob     2415 40 57 62
+BBB
+
+# 我们的 awk 脚本如下：
+cat > cal.awk << CCC
+#!/bin/awk -f
+#运行前
+BEGIN {
+    math = 0
+    english = 0
+    computer = 0
+    printf "NAME    NO.   MATH  ENGLISH  COMPUTER   TOTAL\n"
+    printf "---------------------------------------------\n"
+}
+#运行中
+{
+    math+=\$3
+    english+=\$4
+    computer+=\$5
+    printf "%-6s %-6s %4d %8d %8d %8d\n", \$1, \$2, \$3,\$4,\$5, \$3+\$4+\$5
+}
+#运行后
+END {
+    printf "---------------------------------------------\n"
+    printf "  TOTAL:%10d %8d %8d \n", math, english, computer
+    printf "AVERAGE:%10.2f %8.2f %8.2f\n", math/NR, english/NR, computer/NR
+}
+CCC
+
+# 执行结果：
+
+awk -f cal.awk score.txt
+
+
+
+
+
+
+
+
+
+
+
