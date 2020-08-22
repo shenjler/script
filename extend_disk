@@ -1,0 +1,122 @@
+
+
+
+#查看虚拟磁盘空间信息，确认确实是需要扩容的虚拟硬盘。
+# VBoxManage showhdinfo <path to file .vdi> 
+# VBoxManage showhdinfo "F:\centos\Centos-Dvd.vdi"
+#计算要扩容的空间大小，我这里是要扩展到50G(1024*50)。
+#   set/a 1024*50
+#扩展虚拟硬盘空间，最后的数字替换成上面计算出的硬盘空间大小。运行VBoxManage modifyhd
+# VBoxManage modifyhd <absolute path including the name and extension> --resize 51200  （单位兆）
+# VBoxManage modifymedium --resize 51200 "F:\centos\Centos-Dvd.vdi"
+
+
+
+
+
+# 1、查看各目录硬盘使用情况
+# du -hs ./* 
+
+# 2、查看文件系统及磁盘分区挂载情况
+df -hT  
+
+# 3、查看scsi/atat磁盘或分区
+ll /dev/sd*
+
+#brw-rw----. 1 root disk 8,  0 8月  22 01:33 /dev/sda      scsi接口的第一个磁盘
+#brw-rw----. 1 root disk 8,  1 8月  22 01:33 /dev/sda1     sda第1个分区
+#brw-rw----. 1 root disk 8,  2 8月  22 02:10 /dev/sda2     sda第2个分区
+#brw-rw----. 1 root disk 8, 16 8月  22 02:10 /dev/sdb      scsi接口的第二个磁盘(未分区)
+
+# 4、查看磁盘信息  对磁盘分区 fdisk /dev/sda    d -删除、  p -主分区、   n -新建、   w  -写入
+fdisk -l
+
+#	磁盘 /dev/sda：64.2 GB, 64172851200 字节，125337600 个扇区
+#	Units = 扇区 of 1 * 512 = 512 bytes
+#	扇区大小(逻辑/物理)：512 字节 / 512 字节
+#	I/O 大小(最小/最佳)：512 字节 / 512 字节
+#	磁盘标签类型：dos
+#	磁盘标识符：0x000cf78d#	
+
+#	   设备 Boot      Start         End      Blocks   Id  System
+#	/dev/sda1   *        2048     2099199     1048576   83  Linux
+#	/dev/sda2         2099200   125337599    61619200   83  Linux#	
+
+#	磁盘 /dev/sdb：8589 MB, 8589934592 字节，16777216 个扇区
+#	Units = 扇区 of 1 * 512 = 512 bytes
+#	扇区大小(逻辑/物理)：512 字节 / 512 字节
+#	I/O 大小(最小/最佳)：512 字节 / 512 字节#	
+#	
+
+#	磁盘 /dev/mapper/centos-root：15.1 GB, 15137243136 字节，29564928 个扇区
+#	Units = 扇区 of 1 * 512 = 512 bytes
+#	扇区大小(逻辑/物理)：512 字节 / 512 字节
+#	I/O 大小(最小/最佳)：512 字节 / 512 字节#	
+#	
+
+#	磁盘 /dev/mapper/centos-swap：859 MB, 859832320 字节，1679360 个扇区
+#	Units = 扇区 of 1 * 512 = 512 bytes
+#	扇区大小(逻辑/物理)：512 字节 / 512 字节
+#	I/O 大小(最小/最佳)：512 字节 / 512 字节#	
+
+# 显示物理卷
+#   pvdisplay - Display various attributes of physical volume(s)    
+pvdisplay
+#  --- Physical volume ---
+#  PV Name               /dev/sda2
+#  VG Name               centos
+#  PV Size               <7.00 GiB / not usable 3.00 MiB
+#  Allocatable           yes (but full)
+#  PE Size               4.00 MiB
+#  Total PE              1791
+#  Free PE               0
+#  Allocated PE          1791
+#  PV UUID               7Liph6-covm-OGgd-QUrG-I7jo-toc2-HoTFy3
+   #
+#  --- Physical volume ---
+#  PV Name               /dev/sdb
+#  VG Name               centos
+#  PV Size               8.00 GiB / not usable 4.00 MiB
+#  Allocatable           yes 
+#  PE Size               4.00 MiB
+#  Total PE              2047
+#  Free PE               24
+#  Allocated PE          2023
+#  PV UUID               fYoCln-nD01-84LO-01cT-Hxxl-6QPa-ITnWfP
+#
+
+#   pvcreate - Initialize physical volume(s) for use by LVM   根据disk磁盘,创建物理卷
+pvcreate  /dev/sdb
+
+
+
+# 显示磁盘卷组
+# vgs - Display information about volume groups 
+vgs
+  
+#   VG     #PV #LV #SN Attr   VSize  VFree 
+#   centos   2   2   0 wz--n- 14.99g 96.00m
+
+# 显示逻辑卷
+# lvs - Display information about logical volumes 
+lvs
+
+#  LV   VG     Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+#  root centos -wi-ao---- <14.10g                                                    
+#  swap centos -wi-ao---- 820.00m 
+
+
+# 扩展卷组大小 vgextend -L +10G centos （卷组名）、 vgreduce 缩小卷组大小
+vgextend -L +10G centos
+
+# 扩展逻辑卷大小 lvextend -L +10G /dev/mapper/centos-root （卷组名）
+lvextend -L +10G /dev/mapper/centos-root  （逻辑卷名）
+
+# 重新读取磁盘
+xfs_growxfs  /dev/mapper/centos-root      # xfs类型磁盘
+
+resize2fs  /dev/mapper/centos-root        # nfs类型磁盘
+
+
+
+
