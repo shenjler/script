@@ -148,5 +148,6 @@ mount -t vboxsf share /root/share
 #编辑/etc/fstab。添加如下用于开机启动
 cat /etc/fstab
 echo "share /root/share vboxsf defaults 0 0" >> /etc/fstab
-echo "mount -t vboxsf share /root/share" /etc/rc.local
-chmod +x /etc/rc.d/rc.local
+
+#或者echo "mount -t vboxsf share /root/share" /etc/rc.local
+#chmod +x /etc/rc.d/rc.local
