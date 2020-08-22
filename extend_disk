@@ -149,4 +149,4 @@ mount -t vboxsf share /root/share
 cat /etc/fstab
 echo "share /root/share vboxsf defaults 0 0" >> /etc/fstab
 echo "mount -t vboxsf share /root/share" /etc/rc.local
-
+chmod +x /etc/rc.d/rc.local
