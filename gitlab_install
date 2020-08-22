@@ -1,0 +1,18 @@
+# 1. Install and configure the necessary dependencies
+sudo yum install -y curl policycoreutils-python openssh-server
+sudo systemctl enable sshd
+sudo systemctl start sshd
+sudo firewall-cmd --permanent --add-service=http
+sudo firewall-cmd --permanent --add-service=https
+sudo systemctl reload firewalld
+
+# email
+sudo yum install -y postfix
+sudo systemctl enable postfix
+sudo systemctl start postfix
+
+
+# 2. Add the GitLab package repository and install the package
+curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.rpm.sh | sudo bash
+
+sudo EXTERNAL_URL="http://192.168.0.114" yum install -y gitlab-ee
