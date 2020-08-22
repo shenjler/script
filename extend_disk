@@ -141,3 +141,10 @@ mount -t xfs
 # 14、挂载 windows 共享文件
 sudo mount -o username=shenjl,password=shenjl //192.168.0.101/share /root/share
 # @See https://www.cnblogs.com/sparkdev/p/9015312.html
+
+
+# 15、启动虚拟机，进入centos。把名为share的共享挂载到/root/share下
+mount -t vboxsf share /root/share
+#编辑/etc/fstab。添加如下用于开机启动
+cat /etc/fstab
+echo "share /root/share vboxsf defaults 0 0" >> /etc/fstab
