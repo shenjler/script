@@ -1,6 +1,6 @@
 
 
-cat >> /etc/host << HHHH
+cat >> /etc/hosts << HHHH
 140.82.113.3 github.com
 192.30.253.118 gist.github.com
 185.199.109.153 assets-cdn.github.com
