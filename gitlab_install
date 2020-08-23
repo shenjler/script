@@ -17,3 +17,10 @@ sudo systemctl start postfix
 curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
 
 sudo EXTERNAL_URL="http://192.168.0.114" yum install -y gitlab-ce
+
+gitlab-ctl reconfigure
+
+gitlab-ctl start 
+
+#gitlab-ctl stop 
+#gitlab-ctl restart 
