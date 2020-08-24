@@ -1,0 +1,3 @@
+git filter-branch --force --index-filter  "git rm --cached --ignore-unmatch  Document/sql_ddl\ 语句/20200430/db/dhq_common_log.sql"   --prune-empty --tag-name-filter cat -- --all
+
+git filter-branch --force --index-filter  "git rm --cached --ignore-unmatch  Document/sql_ddl\ 语句/20200430/db/dhq_devops.sql"  --prune-empty --tag-name-filter cat -- --all
