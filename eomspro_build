@@ -1,0 +1,37 @@
+
+echo "build module $project"
+
+host168="19.52.68.168"
+
+# 复制包
+cpModule(){
+	jarfile=""
+	if [ -d "./$1/target" ]; then
+    	jarfile=`ls $1/target/*.jar`
+    	echo $jarfile
+    else
+    	jarfile=`ls $1/*-service/target/*.jar`
+    	if [ -f "$jarfile" ]; then
+          echo $jarfile
+        fi
+    fi
+    scp -r $jarfile $host168:/data/pro/
+    module="module=$1"
+    path="path=$jarfile"
+    curl -X POST -F "${module}" -F "${path}" http://19.52.68.168/devops/version/add	
+}
+
+
+if [ $project == "dhqOneOss" ]; then
+	dirlist=`ls -d dhqOne*`
+    for dir in $dirlist 
+    do
+    	if [ $dir == "dhqOneOssCmdbUI" -o $dir == "dhqOneOssMysql2Es" ]; then
+        	continue
+        fi
+    	echo dir
+        cpModule $dir
+    done
+else
+	cpModule $project
+fi
