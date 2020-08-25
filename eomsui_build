@@ -1,0 +1,36 @@
+
+ls -l .
+#cd ./dhqOneOssCmdbUI
+#cd /home/jenkins/workspace/pro-eoms-ui/dhqOneOssCmdbUI && npm run build:prod
+
+cd /home/jenkins/workspace/pro-eoms-ui/dhqOneOssCmdbUI
+
+
+# export NODE_OPTIONS="--max-old-space-size=8192"
+echo $NODE_OPTIONS
+
+if [ -d "dist" ]; then
+	rm -rf dist
+fi
+#npm config set unsafe-perm true
+
+#npm config set registry http://10.0.115.156:8081/nexus/content/repositories/npm/
+
+npm install # --unsafe-perm
+#npm rebuild node-sass
+
+npm run build:prod 
+
+
+if [ -d "cmdb" ]; then
+	rm -rf cmdb
+fi
+mkdir cmdb
+cp -a dist/* cmdb/
+zip -r cmdb.zip cmdb/*
+#cp -r cmdb.zip /data/pro
+
+scp -r cmdb.zip 19.52.68.168:/data/pro
+
+echo "build finish"
+
