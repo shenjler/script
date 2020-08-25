@@ -1,0 +1,10 @@
+git clone -b release-rocketmq-console-1.0.0 https://github.com/apache/rocketmq-externals.git
+cd rocketmq-externals/rocketmq-console/
+
+sed -i 's/^rocketmq.config.namesrvAddr=.*/rocketmq.config.namesrvAddr=192.168.0.114:9876/' src/main/resources/application.properties
+
+mvn clean package -Dmaven.test.skip=true
+java -jar target/rocketmq-console-ng-1.0.0.jar
+#如果配置文件没有填写Name Server
+#java -jar target/rocketmq-console-ng-1.0.0.jar --rocketmq.config.namesrvAddr='192.168.0.114:9876'
+
