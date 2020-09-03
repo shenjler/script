@@ -1,5 +1,6 @@
 
 # curl https://raw.githubusercontent.com/shenjler/scripts/master/yum_repos_mirrors | sh
+# echo "151.101.76.133 raw.githubusercontent.com" >> /etc/hosts
 
 python -V
 # yum install -y python
