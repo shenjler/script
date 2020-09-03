@@ -4,7 +4,7 @@
 
 python -V
 # yum install -y python
-sudo yum -y install python37
+sudo yum -y install python36
 
 # 替换原来版本
 mv /usr/bin/python /usr/bin/python_old
