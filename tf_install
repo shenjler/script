@@ -24,6 +24,11 @@ sudo yum -y install epel-release
 sudo yum -y install python-pip
 pip -V
 
+#curl https://bootstrap.pypa.io/get-pip.py | python3.6
+#whereis pip
+#sudo ln -s /usr/local/bin/pip /bin/pip
+
+
 # Requires the latest pip
 pip install --upgrade pip
 
