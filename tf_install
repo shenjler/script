@@ -37,3 +37,7 @@ pip install tensorflow
 
 # Or try the preview build (unstable)
 # pip install tf-nightly
+
+# test install success
+python -c "import tensorflow as tf;print(tf.reduce_sum(tf.random.normal([1000, 1000])))"
+
