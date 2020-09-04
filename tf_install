@@ -47,8 +47,9 @@ sudo chmod +x cuda_10.0.130_410.48_linux
 ./cuda_10.0.130_410.48_linux
 
 
-cat ~/.bashrc << AAA
+cat >> ~/.bashrc << AAA
 export CUDA_HOME=/usr/local/cuda
 export LD_LIBRARY_PATH=/usr/local/cuda/lib64:"$LD_LIBRARY_PATH:/usr/loacl/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64"
 export PATH=/usr/local/cuda/bin:$PATH
 AAA
+source ~/.bashrc
