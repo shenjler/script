@@ -42,14 +42,36 @@ pip install tensorflow
 python -c "import tensorflow as tf;print(tf.reduce_sum(tf.random.normal([1000, 1000])))"
 
 # 解决Could not load dynamic library 'libcudart.so.10.0'的问题
-wget https://developer.nvidia.com/compute/cuda/10.0/Prod/local_installers/cuda_10.0.130_410.48_linux
-sudo chmod +x cuda_10.0.130_410.48_linux
-./cuda_10.0.130_410.48_linux
+# wget https://developer.nvidia.com/compute/cuda/10.0/Prod/local_installers/cuda_10.0.130_410.48_linux
+wget https://developer.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.105_418.39_linux.run
+sudo chmod +x cuda_10.1.105_418.39_linux.run
+./cuda_10.1.105_418.39_linux.run
 
 
 cat >> ~/.bashrc << AAA
 export CUDA_HOME=/usr/local/cuda
-export LD_LIBRARY_PATH=/usr/local/cuda/lib64:"$LD_LIBRARY_PATH:/usr/loacl/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64"
+export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:/usr/loacl/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64
 export PATH=/usr/local/cuda/bin:$PATH
 AAA
 source ~/.bashrc
+nvcc --version
+
+
+function notRun(){
+sudo rm -rf /usr/local/cuda
+sudo ln -s /usr/local/cuda-10.0/ /usr/local/cuda
+
+
+cat >> /etc/profile.d/cuda.sh << BBB
+export PATH=\$PATH:/usr/local/cuda/bin
+export CUDADIR=/usr/local/cuda
+BBB
+cat /etc/profile.d/cuda.sh
+
+cat >> /etc/ld.so.conf.d/cuda.conf << CCC
+/usr/local/cuda/lib64
+CCC
+cat /etc/ld.so.conf.d/cuda.conf
+
+sudo ldconfig
+}
