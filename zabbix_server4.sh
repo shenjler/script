@@ -32,6 +32,8 @@ zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -h 172.16.253.104
 
 ##  Congratulations! You have successfully installed Zabbix frontend.
 ##  Configuration file "/etc/zabbix/web/zabbix.conf.php" created.
+##  Zabbix默认账户：Admin ，默认密码：zabbix
+
 
 
 
