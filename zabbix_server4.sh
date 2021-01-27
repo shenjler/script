@@ -52,6 +52,10 @@ grep "^DB" /etc/zabbix/zabbix_server.conf
 ### 编辑配置文件 /etc/httpd/conf.d/zabbix.conf, uncomment and set the right timezone for you.
 # php_value date.timezone Europe/Riga
 
+
+yum install httpd -y
+systemctl status httpd.service
+
 grep "^php_value date.timezone" /etc/httpd/conf.d/zabbix.conf  | grep -v '^php_value'
 # cat /etc/httpd/conf.d/zabbix.conf
 sed -i "s/php_value date.timezone Europe\/Riga/php_value date.timezone Asia\/Shanghai/" /etc/httpd/conf.d/zabbix.conf
