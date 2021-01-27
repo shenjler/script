@@ -53,12 +53,12 @@ grep "^DB" /etc/zabbix/zabbix_server.conf
 # php_value date.timezone Europe/Riga
 
 
-yum install httpd -y
-systemctl status httpd.service
+## yum install httpd -y
+## systemctl status httpd.service
 
-grep "^php_value date.timezone" /etc/httpd/conf.d/zabbix.conf  | grep -v '^php_value'
+grep "# php_value date.timezone" /etc/httpd/conf.d/zabbix.conf 
 # cat /etc/httpd/conf.d/zabbix.conf
-sed -i "s/php_value date.timezone Europe\/Riga/php_value date.timezone Asia\/Shanghai/" /etc/httpd/conf.d/zabbix.conf
+sed -i "s/# php_value date.timezone Europe\/Riga/php_value date.timezone Asia\/Shanghai/" /etc/httpd/conf.d/zabbix.conf
 
 
 ### f. 启动Zabbix server和agent进程
