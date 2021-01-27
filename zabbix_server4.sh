@@ -30,6 +30,10 @@ mysql -h 172.16.253.104 -u root --password=Pccw@123456 -e "create database zabbi
 zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -h 172.16.253.104 -uroot -pPccw@123456 zabbix
 
 
+##  Congratulations! You have successfully installed Zabbix frontend.
+##  Configuration file "/etc/zabbix/web/zabbix.conf.php" created.
+
+
 
 ### d. 为Zabbix server配置数据库
 ### 编辑配置文件 /etc/zabbix/zabbix_server.conf
