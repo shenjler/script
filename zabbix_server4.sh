@@ -4,7 +4,7 @@ rpm -Uvh https://repo.zabbix.com/zabbix/4.0/rhel/7/x86_64/zabbix-release-4.0-2.e
 yum clean all
 
 ### b. 安装Zabbix server，Web前端，agent
-yum install zabbix-server-mysql zabbix-web-mysql zabbix-agent
+yum install -y zabbix-server-mysql zabbix-web-mysql zabbix-agent
 
 ### c. 创建初始数据库
 ### Make sure you have database server up and running.
