@@ -6,8 +6,9 @@
 rpm -Uvh https://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm
 yum clean all
 
-### b. Install Zabbix server and agent
-yum install zabbix-server-mysql zabbix-agent
+### b. Install Zabbix server and agent  
+## zabbix-server-mysql
+yum install zabbix-agent
 
 ### c. Install Zabbix frontend
 yum install centos-release-scl
@@ -17,8 +18,12 @@ yum install centos-release-scl
 ### ...
 ### enabled=1
 ### ...
-### Install Zabbix frontend packages.
+cat /etc/yum.repos.d/zabbix.repo
+sed -i "s/DBHost=localhost/DBHost=172.16.253.104/" /etc/yum.repos.d/zabbix.repo
 
+
+
+### Install Zabbix frontend packages.
 yum install zabbix-web-mysql-scl zabbix-apache-conf-scl
 
 
@@ -39,12 +44,19 @@ yum install zabbix-web-mysql-scl zabbix-apache-conf-scl
 
 ### e. 为Zabbix server配置数据库
 ### 编辑配置文件 /etc/zabbix/zabbix_server.conf
-DBPassword=password
+### DBPassword=password
+cat /etc/zabbix/zabbix_server.conf 
+
+sed -i "s/DBHost=localhost/DBHost=172.16.253.104/" /etc/zabbix/zabbix_server.conf
+sed -i "s/DBUser=zabbix/DBUser=root/" /etc/zabbix/zabbix_server.conf
+sed -i "s/DBPassword=password/DBPassword=Pccw@123456/" /etc/zabbix/zabbix_server.conf
 
 
 ### f. 为Zabbix前端配置PHP
 ### 编辑配置文件 /etc/opt/rh/rh-php72/php-fpm.d/zabbix.conf, uncomment and set the right timezone for you.
 ### ; php_value[date.timezone] = Europe/Riga
+
+sed -i "s/; php_value[date.timezone] = Europe\/Riga/php_value[date.timezone] = Asia\/Shanghai/" /etc/opt/rh/rh-php72/php-fpm.d/zabbix.conf
 
 
 ### g. 启动Zabbix server和agent进程
@@ -60,5 +72,5 @@ curl -i http://172.16.253.105/zabbix
 
 
 ### 开始使用Zabbix
-
+# https://www.zabbix.com/documentation/5.0/manual/installation/install#installing_frontend
 
