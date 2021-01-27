@@ -9,6 +9,10 @@ yum install -y zabbix-server-mysql zabbix-web-mysql zabbix-agent
 ### c. 创建初始数据库
 ### Make sure you have database server up and running.
 
+## install mysql client
+## rpm -ivh https://repo.mysql.com//mysql57-community-release-el7-11.noarch.rpm
+## yum install mysql-community-client.x86_64 -y
+
 ## 在数据库主机上运行以下代码。
 
 # mysql -uroot -p
@@ -23,7 +27,7 @@ yum install -y zabbix-server-mysql zabbix-web-mysql zabbix-agent
 
 
 mysql -h 172.16.253.104 -u root --password=Pccw@123456 -e "create database zabbix character set utf8 collate utf8_bin;"
-zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -h 172.16.253.104 -uroot -p Pccw@123456
+zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -h 172.16.253.104 -uroot -pPccw@123456 zabbix
 
 
 
@@ -33,9 +37,14 @@ zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -h 172.16.253.104
 
 cat /etc/zabbix/zabbix_server.conf 
 
-sed -i "s/DBHost=localhost/DBHost=172.16.253.104/" /etc/zabbix/zabbix_server.conf
+grep "^# DB" /etc/zabbix/zabbix_server.conf
+
+sed -i "s/# DBHost=localhost/DBHost=172.16.253.104/" /etc/zabbix/zabbix_server.conf
+sed -i "s/# DBPort=/DBPort=3306/" /etc/zabbix/zabbix_server.conf
 sed -i "s/DBUser=zabbix/DBUser=root/" /etc/zabbix/zabbix_server.conf
-sed -i "s/DBPassword=password/DBPassword=Pccw@123456/" /etc/zabbix/zabbix_server.conf
+sed -i "s/# DBPassword=/DBPassword=Pccw@123456/" /etc/zabbix/zabbix_server.conf
+
+grep "^DB" /etc/zabbix/zabbix_server.conf
 
 
 
@@ -43,6 +52,8 @@ sed -i "s/DBPassword=password/DBPassword=Pccw@123456/" /etc/zabbix/zabbix_server
 ### 编辑配置文件 /etc/httpd/conf.d/zabbix.conf, uncomment and set the right timezone for you.
 # php_value date.timezone Europe/Riga
 
+grep "^php_value date.timezone" /etc/httpd/conf.d/zabbix.conf  | grep -v '^php_value'
+# cat /etc/httpd/conf.d/zabbix.conf
 sed -i "s/php_value date.timezone Europe\/Riga/php_value date.timezone Asia\/Shanghai/" /etc/httpd/conf.d/zabbix.conf
 
 
