@@ -30,10 +30,6 @@ mysql -h 172.16.253.104 -u root --password=Pccw@123456 -e "create database zabbi
 zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -h 172.16.253.104 -uroot -pPccw@123456 zabbix
 
 
-##  Congratulations! You have successfully installed Zabbix frontend.
-##  Configuration file "/etc/zabbix/web/zabbix.conf.php" created.
-##  Zabbix默认账户：Admin ，默认密码：zabbix
-
 
 
 
@@ -80,6 +76,12 @@ systemctl enable zabbix-server zabbix-agent httpd
 curl -i http://172.16.253.105/zabbix
 
 
+
+##  Congratulations! You have successfully installed Zabbix frontend.
+##  Configuration file "/etc/zabbix/web/zabbix.conf.php" created.
+##  Zabbix默认账户：Admin ，默认密码：zabbix
+
+
 ## connect mysql fail 
 # getenforce     返回   Enforcing 
 # setenforce 0   设置后getenforce返回  Permissive
@@ -87,6 +89,8 @@ curl -i http://172.16.253.105/zabbix
 ## Zabbix server is	Not running
 yum install openssl -y
 yum install openssl-devel -y
+
+
 
 
 ### 开始使用Zabbix
