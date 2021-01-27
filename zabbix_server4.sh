@@ -74,5 +74,9 @@ systemctl enable zabbix-server zabbix-agent httpd
 curl -i http://172.16.253.105/zabbix
 
 
+## connect mysql fail 
+# getenforce     返回   Enforcing 
+# setenforce 0   设置后getenforce返回  Permissive
+
 ### 开始使用Zabbix
 # https://www.zabbix.com/documentation/4.0/manual/installation/install#installing_frontend
