@@ -8,7 +8,7 @@ yum clean all
 
 ### b. Install Zabbix server and agent  
 ## zabbix-server-mysql
-yum install zabbix-agent
+yum install zabbix-agent -y
 
 ### c. Install Zabbix frontend
 yum install centos-release-scl
