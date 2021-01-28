@@ -19,3 +19,5 @@ sed -i "s/^ServerActive=.*$/ServerActive=${zabbixServer}/g" /etc/zabbix/zabbix_a
 
 grep "Server" /etc/zabbix/zabbix_agentd.conf | grep -v '^#'
 service zabbix-agent restart
+
+systemctl status zabbix-agent
