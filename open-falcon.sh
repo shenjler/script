@@ -67,8 +67,13 @@ grep -Ilr 3306  ./ | xargs -n1 -- sed -i 's/root:/root:Pccw@123456/g'
 cd $WORKSPACE
 ./open-falcon start
 
+
 # 检查所有模块的启动状况
 ./open-falcon check
+
+cd $WORKSPACE
+./open-falcon start api
+
 
 
 # 前端：
@@ -104,6 +109,8 @@ virtualenv ./env
 bash control start
 #open http://127.0.0.1:8081 in your browser.
 # bash control stop
+#查看日志
+bash control tail
 
 curl http://127.0.0.1:8081
 
