@@ -6,7 +6,7 @@ tar -xvf Python-3.7.3.tar.xz
 
 # 3.编译安装
 mkdir /usr/local/python3 #创建编译安装目录
-cd Python-3.7.0
+cd Python-3.7.3
 ./configure --prefix=/usr/local/python3
 make && make install
 # 4.创建软连接
