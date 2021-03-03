@@ -4,4 +4,26 @@ tar -xzvf node_exporter-*.*.tar.gz
 cd node_exporter-*.*
 
 #  默认 9100 端口 --web.listen-address 127.0.0.1:9100
-./node_exporter  &   
+# ./node_exporter  &   
+
+# 创建服务
+cp node_exporter /usr/local/bin/
+
+cat << EOF > /usr/lib/systemd/system/node_exporter.service 
+[Service]
+User=root
+Group=root
+ExecStart=/usr/local/bin/node_exporter
+
+[Install]
+WantedBy=multi-user.target
+
+[Unit]
+Description=node_exporter
+After=network.target 
+EOF
+
+
+systemctl start node_exporter
+systemctl status node_exporter
+systemctl enable node_exporter
