@@ -6,14 +6,16 @@ cat > /usr/lib/systemd/system/${module}.service << AAA
 Description=${module}
 
 [Service]
-ExecStart=/usr/bin/java  -Duser.timezone=UTC+8 -jar /data/spider/spider-1.0.0-RC01.jar >/dev/null
+ExecStart=${JAVA_HOME}/java  -Duser.timezone=UTC+8 -jar /data/spider/pccw-spider-1.0-SNAPSHOT.jar >/dev/null
 ExecStop=/usr/bin/kill -9 `cat /run/java-${module}.pid`
 Restart=always
 PIDFile=/run/java-${module}.pid
 
 [Install]
 WantedBy=multi-user.target
+
 AAA
+
 
 
 systemctl start ${module}.service
