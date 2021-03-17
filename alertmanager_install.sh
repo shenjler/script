@@ -10,3 +10,15 @@ nohup ./alertmanager > alertmanager.out 2>&1 &
 ps -ef | grep alertmanager 
 
 # ./alertmanager --config.file=alertmanager.yml
+
+
+curl http://pccw104:9093/
+
+#prometheus关联alertmanager
+#prometheus.yml中的alerting标签下配置上alertmanager的地址即可，配置如下：
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets: ['192.168.199.23:9093']
