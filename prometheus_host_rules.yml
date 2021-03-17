@@ -1,0 +1,37 @@
+groups:
+  - name: 主机状态监控
+    rules:
+      - alert: CPU使用率告警
+        expr: sum(avg without (cpu)(irate(node_cpu_seconds_total{mode!='idle'}[5m]))) by (instance) > 0.85
+        for: 1m
+        labels:
+          severity: 严重告警
+        annotations:
+          summary: "实例 {{ $labels.instance }} CPU 使用率过高"
+          description: "实例{{ $labels.instance }} CPU 使用率超过 85% (当前值为: {{ $value }})"
+
+      - alert: 内存使用率告警
+        expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes)/node_memory_MemTotal_bytes > 0.85
+        for: 1m
+        labels:
+          severity: 严重告警
+        annotations:
+          summary: "实例 {{ $labels.instance }} 内存使用率过高"
+          description: "实例 {{ $labels.instance }} 内存使用率超过 85% (当前值为: {{ $value }})"
+
+      - alert: 磁盘使用率告警
+        expr: 100 - (node_filesystem_free_bytes{fstype=~"ext4|xfs"} / node_filesystem_size_bytes{fstype=~"ext4|xfs"} * 100) > 80
+        for: 1m
+        labels:
+          severity: 严重告警
+        annotations:
+          summary: "实例 {{ $labels.instance }} 磁盘分区【{{ $labels.mountpoint }}】 使用率过高"
+          description: "实例 {{ $labels.instance }} 磁盘分区【{{ $labels.mountpoint }}】 使用率超过80% (当前值为: {{ $value }}%)"
+
+
+
+#  热重启prometheus
+#  curl -X POST http://localhost:9090/-/reload
+
+#   start_prometheus.sh
+#   nohup ./prometheus --config.file=prometheus.yml --web.enable-lifecycle &
