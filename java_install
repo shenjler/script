@@ -21,10 +21,15 @@ command -v java
 
 sudo sh -c "echo export JAVA_HOME=/usr/java/jdk1.8.0_161 >> /etc/profile"
 
-sudo sh -c "echo export PATH=$PATH:$JAVA_HOME/bin >> /etc/profile"
+sudo sh -c "echo export PATH=\$PATH:\$JAVA_HOME/bin >> /etc/profile"
 
 source /etc/profile
 
 
+
+sudo yum install -y java-1.8.0-openjdk-devel
+sudo sh -c "echo export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.282.b08-1.el7_9.x86_64 >> /etc/profile"
+sudo sh -c 'echo export PATH=\$PATH:\$JAVA_HOME/bin >> /etc/profile'
+source /etc/profile
 
 
