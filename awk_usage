@@ -131,6 +131,28 @@ awk -f cal.awk score.txt
 
 
 
+交互式 Bash Shell 获取进程 pid
+在已知进程名(name)的前提下，交互式 Shell 获取进程 pid 有很多种方法，典型的通过 grep 获取 pid 的方法为（这里添加 -v grep是为了避免匹配到 grep 进程）：
+
+ps -ef | grep "name" | grep -v grep | awk '{print $2}'
+
+或者不使用 grep（这里名称首字母加[]的目的是为了避免匹配到 awk 自身的进程）：
+
+ps -ef | awk '/[n]ame/{print $2}'
+
+搜索java 关键字的进程，并多行的pid 转 空格分隔的字符串
+ps -ef | awk '/[j]ava/{print $2}' |awk BEGIN{RS=EOF}'{gsub(/\n/," ");print}' 
+
+ps -ef | awk '/[n]ginx/{print $2}' |awk BEGIN{RS=EOF}'{gsub(/\n/," ");print}' 
+
+
+pids=`ps -ef | awk '/[n]ginx/{print $2}' |awk BEGIN{RS=EOF}'{gsub(/\n/," ");print}'`
+if [ -n "$pids" ]; then
+    echo "kill process: $pids"
+    kill $pids
+fi
+
+
 
 
 

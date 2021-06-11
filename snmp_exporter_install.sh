@@ -1,4 +1,11 @@
 
+
+# https://www.cnblogs.com/charlieroro/p/11118671.html
+# https://cloud.tencent.com/developer/article/1602923
+
+# scrape_configs 配置说明
+# https://blog.csdn.net/wtan825/article/details/93651164
+
 # snmp 监控
 wget https://github.com/prometheus/snmp_exporter/releases/download/v0.20.0/snmp_exporter-0.20.0.linux-amd64.tar.gz
 tar -zxvf snmp_exporter-*.tar.gz
