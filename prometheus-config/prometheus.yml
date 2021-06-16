@@ -1,0 +1,78 @@
+# my global config
+global:
+  scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+       - alertmanager:9093
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+  # - "test_rules.yml"
+  - "*_rules.yml"
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: 'prometheus'
+
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+
+    static_configs:
+    - targets: ['localhost:9090','pccw101:9100','pccw102:9100','pccw103:9100','pccw104:9100','pccw105:9100']
+
+
+
+  - job_name: 'snmp'
+    static_configs:
+    - targets:
+      - 172.16.253.103  # SNMP 设备
+      - 172.16.253.95
+      - 172.16.253.105
+    metrics_path: /snmp
+    params:
+      module: [if_mib]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: pccw104:9116 
+   
+
+  - job_name: mysql
+    static_configs:
+      - targets: ['172.16.253.104:9104']
+        labels:
+          instance: db-104
+          server: db-104
+          #p_label: hodor
+          #p_value: shenjl
+    #metric_relabel_configs:
+    relabel_configs:
+      #- source_labels: [__name__]
+      - action: labelmap
+        regex: p_(.*)
+        replacement: "mysql_$1"
+    metric_relabel_configs:
+     # - action: labelmap
+       # source_labels: [__name__]
+        #regex: inst(.*) 
+        #target_label: mysql_$1
+        #replacement: "mysql_$1"
+      - source_labels: [__name__]
+        regex: mysql_global_status_(.+)
+        replacement: "mysql:$1"
+        target_label: __sname__
+
+
