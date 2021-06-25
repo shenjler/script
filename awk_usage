@@ -152,9 +152,17 @@ if [ -n "$pids" ]; then
     kill $pids
 fi
 
+#  xargs --no-run-if-empty 参数非空时，执行命令
+ps -ef | grep xxxx | grep -v grep | awk '{print $2}' | xargs --no-run-if-empty kill 
+ps -ef | grep xxxx | grep -v grep | awk '{print $2}' | xargs -r kill 
 
-
-
+# 替换换行符 https://stackoverflow.com/questions/1251999/how-can-i-replace-a-newline-n-using-sed
+sed ':a;N;$!ba;s/\n/ /g' file
+解析：
+1、:a create a label 'a'
+2、N append the next line to the pattern space
+3、$! if not the last line, ba branch (go to) label 'a'
+4、s substitute, /\n/ regex for new line, / / by a space, /g global match (as many times as it can)
 
 
 

@@ -1,7 +1,8 @@
 
 
 # openvpn 安装
-# https://i4t.com/4481.html
+# https://i4t.com/4481.html     秘钥的方式登录
+# https://i4t.com/4485.html   账号密码方式
 # /etc/openvpn/server.conf
 
 
@@ -154,6 +155,7 @@ iptables -P FORWARD ACCEPT
 iptables -I INPUT -p tcp --dport 1194 -m comment --comment "openvpn" -j ACCEPT
 #iptables -t nat -A POSTROUTING -s 10.170.0.0/24 -j MASQUERADE
 iptables -t nat -A POSTROUTING -s 192.168.2.0/24 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 192.168.3.0/24 -j MASQUERADE
 
 
 # 18、启动openvpn服务
@@ -192,3 +194,12 @@ verb 3
 
 注意：
 需配置路由转发 到互联网
+
+
+
+cat >> /etc/openvpn/psw-file << AAA
+shenjl shenjl123
+hodor hodor!@
+AAA
+
+auth-user-pass              #使用用户名密码登录openvpn服务器

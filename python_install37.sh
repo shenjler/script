@@ -25,7 +25,9 @@ pip3 -V
 # 替换原来版本
 mv /usr/bin/python /usr/bin/python_old
 ln -s /usr/local/python3/bin/python3 /usr/bin/python
-ln -s /usr/local/python3/bin/pip3 /usr/bin/pip
+
+mv  /usr/bin/pip /usr/bin/pip_old
+ln -s /usr/local/python3.7/bin/pip3 /usr/bin/pip
 python -V
 
 
